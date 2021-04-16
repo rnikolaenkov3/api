@@ -23,6 +23,10 @@ class ProductService
     {
         $request = $this->mProduct;
 
+        if (isset($data['with_trash'])) {
+            $request = $request->withTrashed();
+        }
+
         if (isset($data['offset'])) {
             $request = $request->offset($data['offset']);
         } else {

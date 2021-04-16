@@ -22,7 +22,10 @@ class ProductController extends Controller
 
         $products = $this->sProduct->getProducts($data);
 
-        dd($products);
-        return response()->json(['status' => 'ok']);
+        return response()->json([
+            'status' => 'ok',
+            'message' => '',
+            'data' => $products->toArray(),
+        ]);
     }
 }
