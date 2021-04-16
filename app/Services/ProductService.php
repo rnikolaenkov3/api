@@ -6,17 +6,14 @@ namespace App\Services;
 
 use App\Models\Product;
 
-class ProductService
+class ProductService extends Service
 {
     protected $mProduct;
-    protected $limit;
-    protected $offset;
 
     public function __construct(Product $product)
     {
+        parent::__construct();
         $this->mProduct = $product;
-        $this->limit = config('main.limit');
-        $this->offset = config('main.offset');
     }
 
     public function getProducts(array $data)
@@ -49,17 +46,7 @@ class ProductService
             $query = $query->where('price', '<=', $data['price_to']);
         }
 
-        if (isset($data['offset'])) {
-            $query = $query->offset($data['offset']);
-        } else {
-            $query = $query->offset($this->offset);
-        }
-
-        if (isset($data['limit'])) {
-            $query = $query->limit($data['limit']);
-        } else {
-            $query = $query->limit($this->limit);
-        }
+        $query = $this->limit($query, $data);
 
         $products = $query->get();
 
