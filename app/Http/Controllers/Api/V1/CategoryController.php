@@ -70,6 +70,20 @@ class CategoryController extends Controller
         }
     }
 
+    public function delete(int $id)
+    {
+        try {
+            $result = $this->sCategory->delete($id);
+
+            return $this->responseOk([$result]);
+        } catch (\DomainException $e) {
+            return $this->responseError($e->getMessage());
+        } catch (\Exception $e) {
+            Log::error($e->getTraceAsString());
+            return $this->responseError($e->getMessage());
+        }
+    }
+
     protected function validateCategory($data)
     {
         $valid = Validator::make($data, [

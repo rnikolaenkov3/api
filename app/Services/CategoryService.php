@@ -38,4 +38,15 @@ class CategoryService extends Service
     {
         return $this->mCategory->create($data);
     }
+
+    public function delete(int $id)
+    {
+        $category = $this->mCategory->find($id);
+
+        if (is_null($category)) {
+            throw new \DomainException('Категория не найдена');
+        }
+
+        return $category->delete();
+    }
 }

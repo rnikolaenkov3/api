@@ -43,6 +43,9 @@ Route::prefix('v1')
             ->name('category.getCategoryById');
         Route::post('/categories/create', 'CategoryController@create')
             ->name('category.create');
+        Route::delete('/categories/delete/{id}', 'CategoryController@delete')
+            ->where('id', '[0-9]+')
+            ->name('category.delete');
 
         Route::fallback(function () {
             return response()->json([
