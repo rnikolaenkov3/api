@@ -48,6 +48,8 @@ class ProductService extends Service
 
         $query = $this->limit($query, $data);
 
+        $query = $query->with('categories');
+
         $products = $query->get();
 
         return $products;
