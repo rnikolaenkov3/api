@@ -41,10 +41,14 @@ class CategoryService extends Service
 
     public function delete(int $id)
     {
-        $category = $this->mCategory->find($id);
+        $category = $this->mCategory->with('products')->find($id);
 
         if (is_null($category)) {
             throw new \DomainException('Категория не найдена');
+        }
+
+        if (count($category->products) != 0) {
+            throw new \DomainException('Невозможно удалить, есть привязанные продукты');
         }
 
         return $category->delete();
