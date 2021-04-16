@@ -57,7 +57,7 @@ class ProductService extends Service
 
     public function getProductById($id)
     {
-        return $this->mProduct->withTrashed()->find($id);
+        return $this->mProduct->withTrashed()->with('categories')->find($id);
     }
 
     public function create($data)
