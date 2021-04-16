@@ -24,24 +24,12 @@ class ProductController extends Controller
 
             $products = $this->sProduct->getProducts($data);
 
-            return response()->json([
-                'status' => 'ok',
-                'message' => '',
-                'data' => $products->toArray(),
-            ]);
+            return $this->responseOk($products->toArray());
         } catch (\DomainException $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => $e->getMessage(),
-                'data' => [],
-            ]);
+            return $this->responseError($e->getMessage());
         } catch (\Exception $e) {
             Log::error($e->getTraceAsString());
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Что-то пошло не так',
-                'data' => [],
-            ]);
+            return $this->responseError($e->getMessage());
         }
     }
 
@@ -54,25 +42,12 @@ class ProductController extends Controller
                 throw new \DomainException('Продукт не найден');
             }
 
-            return response()->json([
-                'status' => 'ok',
-                'message' => '',
-                'data' => [$product],
-            ]);
+            return $this->responseOk([$product]);
         } catch (\DomainException $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => $e->getMessage(),
-                'data' => [],
-            ]);
+            return $this->responseError($e->getMessage());
         } catch (\Exception $e) {
             Log::error($e->getTraceAsString());
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Что-то пошло не так',
-                'data' => [],
-            ]);
+            return $this->responseError($e->getMessage());
         }
-
     }
 }
