@@ -3,8 +3,6 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-
-use App\Http\Requests\CreateProductRequest;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
