@@ -9,8 +9,6 @@ use App\Models\Category;
 class CategoryService extends Service
 {
     protected $mCategory;
-//    protected $limit;
-//    protected $offset;
 
     public function __construct(Category $category)
     {
@@ -29,5 +27,10 @@ class CategoryService extends Service
         $query = $this->limit($query, $data);
 
         return $query->get();
+    }
+
+    public function getCategoryById(int $id)
+    {
+        return $this->mCategory->find($id);
     }
 }

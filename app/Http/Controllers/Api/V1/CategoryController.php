@@ -32,4 +32,22 @@ class CategoryController extends Controller
             return $this->responseError($e->getMessage());
         }
     }
+
+    public function getCategoryById(int $id)
+    {
+        try {
+            $category = $this->sCategory->getCategoryById($id);
+
+            if (is_null($category)) {
+                throw new \DomainException('Категория не найдена');
+            }
+
+            return $this->responseOk([$category]);
+        } catch (\DomainException $e) {
+            return $this->responseError($e->getMessage());
+        } catch (\Exception $e) {
+            Log::error($e->getTraceAsString());
+            return $this->responseError($e->getMessage());
+        }
+    }
 }

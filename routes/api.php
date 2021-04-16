@@ -38,4 +38,7 @@ Route::prefix('v1')
 
         Route::get('/categories', 'CategoryController@getCategories')
             ->name('category.getCategories');
+        Route::get('/categories/{id}', 'CategoryController@getCategoryById')
+            ->where('id', '[0-9]+')
+            ->name('category.getCategoryById');
     });
