@@ -43,4 +43,9 @@ class ProductService
 
         return $products;
     }
+
+    public function getProductById($id)
+    {
+        return $this->mProduct->withTrashed()->find($id);
+    }
 }

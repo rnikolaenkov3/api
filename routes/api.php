@@ -23,4 +23,5 @@ Route::prefix('v1')
     ->name('api_v1.')
     ->group(function() {
         Route::get('/', 'ProductController@getProducts')->name('product.getProducts');
+        Route::get('/{id}', 'ProductController@getProductById')->name('product.getProductById');
     });
