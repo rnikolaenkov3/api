@@ -24,4 +24,5 @@ Route::prefix('v1')
     ->group(function() {
         Route::get('/', 'ProductController@getProducts')->name('product.getProducts');
         Route::get('/{id}', 'ProductController@getProductById')->name('product.getProductById');
+        Route::post('/products/create', 'ProductController@create')->name('product.create');
     });

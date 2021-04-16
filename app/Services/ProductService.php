@@ -48,4 +48,9 @@ class ProductService
     {
         return $this->mProduct->withTrashed()->find($id);
     }
+
+    public function create($data)
+    {
+        return $this->mProduct->create($data);
+    }
 }
