@@ -20,4 +20,9 @@ class Product extends Model
         'published_at',
         'deleted_at'
     ];
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
 }
