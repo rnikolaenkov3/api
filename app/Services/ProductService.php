@@ -27,6 +27,28 @@ class ProductService
             $request = $request->withTrashed();
         }
 
+        if (isset($data['title'])) {
+            $request = $request->where('title', $data['title']);
+        }
+
+        if (isset($data['published'])) {
+            if ($data['published'] == 1) {
+                $request = $request->whereNotNull('published_at');
+            }
+
+            if ($data['published'] == 0) {
+                $request = $request->whereNull('published_at');
+            }
+        }
+
+        if (isset($data['price_from'])) {
+            $request = $request->where('price', '>=', $data['price_from']);
+        }
+
+        if (isset($data['price_to'])) {
+            $request = $request->where('price', '<=', $data['price_to']);
+        }
+
         if (isset($data['offset'])) {
             $request = $request->offset($data['offset']);
         } else {
