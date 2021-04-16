@@ -41,4 +41,12 @@ Route::prefix('v1')
         Route::get('/categories/{id}', 'CategoryController@getCategoryById')
             ->where('id', '[0-9]+')
             ->name('category.getCategoryById');
+
+        Route::fallback(function () {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Неверный запрос',
+                'data' => [],
+            ]);
+        });
     });
