@@ -21,47 +21,47 @@ class ProductService
 
     public function getProducts(array $data)
     {
-        $request = $this->mProduct;
+        $query = $this->mProduct;
 
         if (isset($data['with_trash'])) {
-            $request = $request->withTrashed();
+            $query = $query->withTrashed();
         }
 
         if (isset($data['title'])) {
-            $request = $request->where('title', $data['title']);
+            $query = $query->where('title', $data['title']);
         }
 
         if (isset($data['published'])) {
             if ($data['published'] == 1) {
-                $request = $request->whereNotNull('published_at');
+                $query = $query->whereNotNull('published_at');
             }
 
             if ($data['published'] == 0) {
-                $request = $request->whereNull('published_at');
+                $query = $query->whereNull('published_at');
             }
         }
 
         if (isset($data['price_from'])) {
-            $request = $request->where('price', '>=', $data['price_from']);
+            $query = $query->where('price', '>=', $data['price_from']);
         }
 
         if (isset($data['price_to'])) {
-            $request = $request->where('price', '<=', $data['price_to']);
+            $query = $query->where('price', '<=', $data['price_to']);
         }
 
         if (isset($data['offset'])) {
-            $request = $request->offset($data['offset']);
+            $query = $query->offset($data['offset']);
         } else {
-            $request = $request->offset($this->offset);
+            $query = $query->offset($this->offset);
         }
 
         if (isset($data['limit'])) {
-            $request = $request->limit($data['limit']);
+            $query = $query->limit($data['limit']);
         } else {
-            $request = $request->limit($this->limit);
+            $query = $query->limit($this->limit);
         }
 
-        $products = $request->get();
+        $products = $query->get();
 
         return $products;
     }
