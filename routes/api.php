@@ -25,4 +25,6 @@ Route::prefix('v1')
         Route::get('/', 'ProductController@getProducts')->name('product.getProducts');
         Route::get('/{id}', 'ProductController@getProductById')->name('product.getProductById');
         Route::post('/products/create', 'ProductController@create')->name('product.create');
+        Route::put('/products/update/{id}', 'ProductController@update')->name('product.update');
+        Route::delete('/products/delete/{id}', 'ProductController@delete')->name('product.delete');
     });

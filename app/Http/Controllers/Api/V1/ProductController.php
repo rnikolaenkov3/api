@@ -58,18 +58,7 @@ class ProductController extends Controller
         try {
             $data = $request->all();
 
-            $errorList = $this->validateProduct($data);
-
-            if (count($errorList) !== 0) {
-                $message = '';
-                foreach ($errorList as $key => $value) {
-                    foreach ($value as $desc) {
-                        $message .= $desc . ' ';
-                    }
-                }
-
-                throw new \DomainException(trim($message));
-            }
+            $this->validateProduct($data);
 
             $newProduct = $this->sProduct->create($data);
 
@@ -80,15 +69,39 @@ class ProductController extends Controller
             Log::error($e->getTraceAsString());
             return $this->responseError($e->getMessage());
         }
+    }
 
+    public function update(Request $request, $id)
+    {
+        try {
+            $data = $request->all();
 
-//        dd($this->validateProduct($data));
+            $this->validateProduct($data);
 
-//        if (!$this->validateProduct($data)) {
-//
-//        }
+            $result = $this->sProduct->update($data, $id);
 
+            return $this->responseOk([$result]);
+        } catch (\DomainException $e) {
+            return $this->responseError($e->getMessage());
+        } catch (\Exception $e) {
+            Log::error($e->getTraceAsString());
+            return $this->responseError($e->getMessage());
+        }
+    }
 
+    public function delete($id)
+    {
+        try {
+
+            $result = $this->sProduct->delete($id);
+
+            return $this->responseOk([$result]);
+        } catch (\DomainException $e) {
+            return $this->responseError($e->getMessage());
+        } catch (\Exception $e) {
+            Log::error($e->getTraceAsString());
+            return $this->responseError($e->getMessage());
+        }
     }
 
     protected function validateProduct($data)
@@ -98,6 +111,19 @@ class ProductController extends Controller
             'description' => 'required',
         ]);
 
-        return $valid->getMessageBag()->getMessages();
+        $errorList = $valid->getMessageBag()->getMessages();
+
+        if (count($errorList) !== 0) {
+            $message = '';
+            foreach ($errorList as $key => $value) {
+                foreach ($value as $desc) {
+                    $message .= $desc . ' ';
+                }
+            }
+
+            throw new \DomainException(trim($message));
+        }
+
+        return;
     }
 }

@@ -53,4 +53,26 @@ class ProductService
     {
         return $this->mProduct->create($data);
     }
+
+    public function update($data, $id)
+    {
+        $product = $this->mProduct->withTrashed()->find($id);
+
+        if (is_null($product)) {
+            throw new \DomainException('Продукт не найден');
+        }
+
+        return $product->update($data);
+    }
+
+    public function delete($id)
+    {
+        $product = $this->mProduct->withTrashed()->find($id);
+
+        if (is_null($product)) {
+            throw new \DomainException('Продукт не найден');
+        }
+
+        return $product->delete();
+    }
 }
