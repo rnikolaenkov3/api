@@ -23,6 +23,10 @@ class CategoryService
     {
         $query = $this->mCategory;
 
+        if (isset($data['title'])) {
+            $query = $query->where('title', $data['title']);
+        }
+
         if (isset($data['offset'])) {
             $query = $query->offset($data['offset']);
         } else {
