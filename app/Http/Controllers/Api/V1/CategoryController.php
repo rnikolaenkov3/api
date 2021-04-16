@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
@@ -50,4 +51,45 @@ class CategoryController extends Controller
             return $this->responseError($e->getMessage());
         }
     }
+
+    public function create(Request $request)
+    {
+        try {
+            $data = $request->all();
+
+            $this->validateCategory($data);
+
+            $newCategory = $this->sCategory->create($data);
+
+            return $this->responseOk([$newCategory]);
+        } catch (\DomainException $e) {
+            return $this->responseError($e->getMessage());
+        } catch (\Exception $e) {
+            Log::error($e->getTraceAsString());
+            return $this->responseError($e->getMessage());
+        }
+    }
+
+    protected function validateCategory($data)
+    {
+        $valid = Validator::make($data, [
+            'title' => 'required',
+        ]);
+
+        $errorList = $valid->getMessageBag()->getMessages();
+
+        if (count($errorList) !== 0) {
+            $message = '';
+            foreach ($errorList as $key => $value) {
+                foreach ($value as $desc) {
+                    $message .= $desc . ' ';
+                }
+            }
+
+            throw new \DomainException(trim($message));
+        }
+
+        return;
+    }
+
 }

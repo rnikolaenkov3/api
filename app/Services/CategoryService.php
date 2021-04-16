@@ -33,4 +33,9 @@ class CategoryService extends Service
     {
         return $this->mCategory->find($id);
     }
+
+    public function create($data)
+    {
+        return $this->mCategory->create($data);
+    }
 }

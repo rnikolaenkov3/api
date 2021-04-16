@@ -41,6 +41,8 @@ Route::prefix('v1')
         Route::get('/categories/{id}', 'CategoryController@getCategoryById')
             ->where('id', '[0-9]+')
             ->name('category.getCategoryById');
+        Route::post('/categories/create', 'CategoryController@create')
+            ->name('category.create');
 
         Route::fallback(function () {
             return response()->json([
