@@ -76,7 +76,11 @@ class ProductService extends Service
 
     public function create($data)
     {
-        return $this->mProduct->create($data);
+        $newProduct = $this->mProduct->create($data);
+        if (isset($data['categories'])) {
+            $newProduct->categories()->attach($data['categories']);
+        }
+        return $newProduct;
     }
 
     public function update($data, $id)
