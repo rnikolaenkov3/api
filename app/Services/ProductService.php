@@ -91,6 +91,11 @@ class ProductService extends Service
             throw new \DomainException('Продукт не найден');
         }
 
+        if (isset($data['categories'])) {
+            $product->categories()->detach();
+            $product->categories()->attach($data['categories']);
+        }
+
         return $product->update($data);
     }
 
