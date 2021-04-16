@@ -46,6 +46,20 @@ class ProductService extends Service
             $query = $query->where('price', '<=', $data['price_to']);
         }
 
+        if (isset($data['category_id'])) {
+            $categoryId = $data['category_id'];
+            $query = $query->whereHas('categories', function ($query) use ($categoryId){
+                return $query->where('categories.id', $categoryId);
+            });
+        }
+
+        if (isset($data['category_name'])) {
+            $categoryName = $data['category_name'];
+            $query = $query->whereHas('categories', function ($query) use ($categoryName){
+                return $query->where('categories.title', $categoryName);
+            });
+        }
+
         $query = $this->limit($query, $data);
 
         $query = $query->with('categories');
